@@ -1,7 +1,7 @@
 from asyncpg import Pool
 from app.users.queries import GET_USERS
-from app.users.models import UserBasic, UserLogin
-from app.users.queries import GET_USERS_EMAIL_AND_PASSWORD
+from app.users.models import UserBasic, UserLogin, UserCreate, User
+from app.users.queries import GET_USERS_EMAIL_AND_PASSWORD, INSERT_USER
 
 
 async def get_users(db_pool: Pool):
@@ -24,4 +24,15 @@ async def authenticate_user(db_pool: Pool, email: str, passwd: str):
                 return None
     except Exception as e:
         print(f"Error fetching users: {e}")
+        raise
+
+
+async def register_user(db_pool: Pool, user: UserCreate):
+    try:
+        async with db_pool.acquire() as connection:
+            parms = (user.email, user.passwd, user.is_active) # parametry przekazywane do placeholderów $1 itd. jako zmienna, żeby nie wymieniać tego w poniższej linii kodu
+            row = await connection.fetchrow(INSERT_USER, *parms) # INSERT_USER jest z queries.py, a user.email, user.passwd, user.is_active to przekazywane wartości do placeholderów w zapytaniu tj. $1, $2, $3
+            return UserBasic(**row)
+    except Exception as e:
+        print(f"Error registering user: {e}")
         raise
