@@ -11,6 +11,16 @@ class User(BaseModel):
     updstmp: date
 
 
+class UserBasic(BaseModel):
+    id: int
+    email: str
+
+
+class UserLogin(BaseModel):
+    email: str
+    passwd: str
+
+
 class UserCreate(BaseModel):
     email: str
     passwd: str = Field(max_length=100, min_length=8)
@@ -22,4 +32,3 @@ class UserUpdate(BaseModel):
     passwd: Optional[str]
     is_active: Optional[bool]
     updstmp: Optional[date]
-

@@ -1,1 +1,2 @@
-GET_USERS = "SELECT id, email FROM users"
+GET_USERS = "SELECT id, email, is_active, insstmp, updstmp FROM users"
+GET_USERS_EMAIL_AND_PASSWORD = "SELECT id, email FROM users WHERE email = $1 AND passwd = $2"
