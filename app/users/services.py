@@ -31,8 +31,9 @@ async def register_user(db_pool: Pool, user: UserCreate):
     try:
         async with db_pool.acquire() as connection:
             parms = (user.email, user.passwd, user.is_active) # parametry przekazywane do placeholderów $1 itd. jako zmienna, żeby nie wymieniać tego w poniższej linii kodu
-            row = await connection.fetchrow(INSERT_USER, *parms) # INSERT_USER jest z queries.py, a user.email, user.passwd, user.is_active to przekazywane wartości do placeholderów w zapytaniu tj. $1, $2, $3
-            return UserBasic(**row)
+            await connection.execute(INSERT_USER, *parms)
+            #row = await connection.fetchrow(INSERT_USER, *parms) # INSERT_USER jest z queries.py, a user.email, user.passwd, user.is_active to przekazywane wartości do placeholderów w zapytaniu tj. $1, $2, $3
+            #return UserBasic(**row)
     except Exception as e:
         print(f"Error registering user: {e}")
         raise

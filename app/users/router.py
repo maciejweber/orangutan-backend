@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 import asyncpg
 from app.database import DataBasePool
 from app.users.services import get_users, authenticate_user, register_user
-from app.users.models import UserLogin, UserCreate, User, UserBasic
+from app.users.models import UserLogin, UserCreate, User, UserBasic, MessageResponse
 
 
 users = APIRouter()
@@ -22,10 +22,12 @@ async def login_endpoint(login_request: UserLogin, db_pool: asyncpg.Pool = Depen
     return user
 
 
-@users.post("/register", response_model=UserBasic)
+@users.post("/register", response_model=MessageResponse)
 async def register_endpoint(user_create: UserCreate, db_pool: asyncpg.Pool = Depends(DataBasePool.get_pool)):
     existing_user = await db_pool.fetchval("SELECT COUNT(1) FROM users WHERE email = $1", user_create.email) # wyszukanie wierszy z users o przekazywanym przy rejestracji mailu
     if existing_user > 0: # sprawdzenie czy istnieje więcej niż 1 taki mail
         raise HTTPException(status_code=400, detail="Email already in use")
-    new_user = await register_user(db_pool, user_create) # wywołanie funkcji register_user i przekazanie 2 argumentów tj. db_pool czyli połączenia z puli połaczeń do bazy oraz user_create czyli obiektu, który jest instancją UserCreate w models.py. UserCreate zawiera dane potrzebne do utworzenia nowego użytkownika
-    return new_user
+    #new_user = await register_user(db_pool, user_create) # wywołanie funkcji register_user i przekazanie 2 argumentów tj. db_pool czyli połączenia z puli połaczeń do bazy oraz user_create czyli obiektu, który jest instancją UserCreate w models.py. UserCreate zawiera dane potrzebne do utworzenia nowego użytkownika
+    #return new_user
+    await register_user(db_pool, user_create)
+    return {"message": "User registered successfully"}
