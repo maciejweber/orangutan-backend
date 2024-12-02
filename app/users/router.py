@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 import asyncpg
 from app.database import DataBasePool
-from app.users.services import get_users, authenticate_user, register_user
+from app.users.services import get_users, authenticate_user, register_user, get_exercises
 from app.users.models import UserLogin, UserCreate, User, UserBasic, MessageResponse
 
 
@@ -31,3 +31,9 @@ async def register_endpoint(user_create: UserCreate, db_pool: asyncpg.Pool = Dep
     #return new_user
     await register_user(db_pool, user_create)
     return {"message": "User registered successfully"}
+
+
+@users.get("/exercises")
+async def get_exercises_endpoint(db_pool: asyncpg.Pool = Depends(DataBasePool.get_pool)):
+    exercises = await get_exercises(db_pool)
+    return exercises

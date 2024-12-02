@@ -36,3 +36,7 @@ class UserUpdate(BaseModel):
 
 class MessageResponse(BaseModel):
     message: str
+
+
+class Exercises(BaseModel):
+    name: str

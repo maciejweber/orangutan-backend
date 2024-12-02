@@ -1,7 +1,7 @@
 from asyncpg import Pool
 from app.users.queries import GET_USERS
-from app.users.models import UserBasic, UserLogin, UserCreate, User
-from app.users.queries import GET_USERS_EMAIL_AND_PASSWORD, INSERT_USER
+from app.users.models import UserBasic, UserLogin, UserCreate, User, Exercises
+from app.users.queries import GET_USERS_EMAIL_AND_PASSWORD, INSERT_USER, GET_EXERCISES
 
 
 async def get_users(db_pool: Pool):
@@ -36,4 +36,14 @@ async def register_user(db_pool: Pool, user: UserCreate):
             #return UserBasic(**row)
     except Exception as e:
         print(f"Error registering user: {e}")
+        raise
+
+
+async def get_exercises(db_pool: Pool):
+    try:
+        async with db_pool.acquire() as connection:
+            rows = await connection.fetch(GET_EXERCISES)
+            return [Exercises(**dict(row)) for row in rows]
+    except Exception as e:
+        print(f"Error fetching users: {e}")
         raise
