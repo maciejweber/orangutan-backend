@@ -1,4 +1,8 @@
 import asyncpg
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 class DataBasePool:
@@ -9,11 +13,11 @@ class DataBasePool:
     async def setup(cls):
 
         cls._db_pool = await asyncpg.create_pool(
-            database="orangutan_database",
-            user="orangutan_admin",
-            password="G@V7xh!83kR*2Jz",
-            host="localhost",
-            port=5432,
+            database=os.getenv("DB_NAME"),
+            user=os.getenv("DB_USER"),
+            password=os.getenv("DB_PASSWORD"),
+            host=os.getenv("DB_HOST"),
+            port=int(os.getenv("DB_PORT")),
         )
 
     @classmethod
