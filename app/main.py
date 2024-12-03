@@ -1,9 +1,12 @@
-from fastapi import FastAPI
-from app.database import DataBasePool
-from app.users.router import users
 import uvicorn
+from fastapi import FastAPI, APIRouter
+from app.database import DataBasePool
+
+from app.users.router import router as users_router
 
 app = FastAPI()
+
+api_router = APIRouter(prefix="/api/v1")
 
 
 @app.on_event("startup")
@@ -16,7 +19,10 @@ async def shutdown():
     await DataBasePool.teardown()
 
 
-app.include_router(users)
+api_router.include_router(users_router, prefix="/users")
+
+
+app.include_router(api_router)
 
 
 def run():
