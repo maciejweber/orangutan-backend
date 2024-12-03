@@ -34,6 +34,6 @@ async def register_endpoint(user_create: UserCreate, db_pool: asyncpg.Pool = Dep
 
 
 @users.get("/exercises")
-async def get_exercises_endpoint(db_pool: asyncpg.Pool = Depends(DataBasePool.get_pool)):
-    exercises = await get_exercises(db_pool)
+async def get_exercises_endpoint(partiesid: int, db_pool: asyncpg.Pool = Depends(DataBasePool.get_pool)): # partiesid to parametr w argumencie endpointu przekazywany do funkcji get_exercises
+    exercises = await get_exercises(db_pool, partiesid)
     return exercises

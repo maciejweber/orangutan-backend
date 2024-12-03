@@ -39,10 +39,10 @@ async def register_user(db_pool: Pool, user: UserCreate):
         raise
 
 
-async def get_exercises(db_pool: Pool):
+async def get_exercises(db_pool: Pool, partiesid: int):
     try:
         async with db_pool.acquire() as connection:
-            rows = await connection.fetch(GET_EXERCISES)
+            rows = await connection.fetch(GET_EXERCISES, partiesid)
             return [Exercises(**dict(row)) for row in rows]
     except Exception as e:
         print(f"Error fetching users: {e}")
