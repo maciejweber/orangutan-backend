@@ -40,3 +40,8 @@ class MessageResponse(BaseModel):
 
 class Exercises(BaseModel):
     name: str
+
+
+class TrainingCreate(BaseModel):
+    userid: int
+    name: str

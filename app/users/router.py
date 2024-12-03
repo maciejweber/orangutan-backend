@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException
 import asyncpg
 from app.database import DataBasePool
-from app.users.services import get_users, authenticate_user, register_user, get_exercises
-from app.users.models import UserLogin, UserCreate, User, UserBasic, MessageResponse
+from app.users.services import get_users, authenticate_user, register_user, get_exercises, register_plan
+from app.users.models import UserLogin, UserCreate, User, UserBasic, MessageResponse, TrainingCreate
 
 
 users = APIRouter()
@@ -37,3 +37,13 @@ async def register_endpoint(user_create: UserCreate, db_pool: asyncpg.Pool = Dep
 async def get_exercises_endpoint(partiesid: int, db_pool: asyncpg.Pool = Depends(DataBasePool.get_pool)): # partiesid to parametr w argumencie endpointu przekazywany do funkcji get_exercises
     exercises = await get_exercises(db_pool, partiesid)
     return exercises
+
+
+@users.post("/register_training", response_model=MessageResponse)
+async def register_training_endpoint(training_create: TrainingCreate, db_pool: asyncpg.Pool = Depends(DataBasePool.get_pool)):
+    existing_plan = await db_pool.fetchval("SELECT COUNT(1) FROM training WHERE userid = $1 and name = $2", training_create.userid, training_create.name)
+    if existing_plan > 0:
+        raise HTTPException(status_code=400, detail="Training already exists")
+    await register_plan(db_pool, training_create)
+    return {"message": "Training registered successfully"}
+
