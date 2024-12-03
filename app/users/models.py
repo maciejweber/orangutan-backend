@@ -22,4 +22,3 @@ class UserUpdate(BaseModel):
     passwd: Optional[str]
     is_active: Optional[bool]
     updstmp: Optional[date]
-

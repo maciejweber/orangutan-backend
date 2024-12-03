@@ -1,1 +1,1 @@
-GET_USERS = "SELECT id, email FROM users"
+GET_USERS = "SELECT id, email, is_active, insstmp, updstmp FROM users"

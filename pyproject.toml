@@ -1,9 +1,12 @@
 [tool.poetry]
 name = "orangutan-backend"
 version = "0.1.0"
-description = ""
+description = "Backend for orangutan project"
 authors = ["Maciej Weber <maciejwebber@gmail.com>"]
 readme = "README.md"
+packages = [
+    { include = "app" }
+]
 
 [tool.poetry.dependencies]
 python = "^3.12"
@@ -12,6 +15,8 @@ uvicorn = "^0.32.1"
 asyncpg = "^0.30.0"
 pydantic = "^2.10.2"
 
+[tool.poetry.scripts]
+start = "app.main:run"
 
 [build-system]
 requires = ["poetry-core"]
