@@ -32,3 +32,18 @@ async def login_user(email: str, password: str):
     # Zwróc token JWT bez danych uzytkownika
 
     return User(**user)
+
+
+async def register_user(email: str, password: str):
+    user = await get_user_details_from_db_by_email(email)
+    if not user:
+        return HTTPException(
+            status_code=404, detail="User with this email already exists"
+        )
+
+    # Zahashuj hasło - bcrypt
+    # Zapisz uytkownika w db z zahashowanym haslem
+    # Zwróć 201 status
+    # Zwróc token JWT bez danych uzytkownika
+
+    return User(**user)

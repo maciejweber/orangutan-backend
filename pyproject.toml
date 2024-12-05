@@ -15,6 +15,7 @@ uvicorn = "^0.32.1"
 asyncpg = "^0.30.0"
 pydantic = "^2.10.2"
 python-dotenv = "^1.0.1"
+bcrypt = "^4.2.1"
 
 [tool.poetry.scripts]
 start = "app.main:run"

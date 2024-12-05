@@ -24,3 +24,17 @@ async def get_user_details_from_db_by_email(email: str):
     if user_details:
         return user_details[0]
     return None
+
+
+async def create_user_in_db(email: str, password: str):
+    query = """
+        INSERT INTO users (email, hashed_password, is_active, insstmp, updstmp)
+        VALUES ($1, $2, TRUE, NOW(), NOW())
+        RETURNING id, email, is_active, insstmp, updstmp
+    """
+    created_user = await execute_db_query(
+        query,
+        email,
+        password,
+    )
+    return created_user[0]
