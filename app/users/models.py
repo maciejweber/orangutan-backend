@@ -17,9 +17,14 @@ class UserCreate(BaseModel):
     is_active: bool
 
 
+class LoginUser(BaseModel):
+    email: str
+    password: str = Field(min_length=8, max_length=128)
+    confirm_password: str = Field(min_length=8, max_length=128)
+
+
 class UserUpdate(BaseModel):
     email: Optional[str]
     passwd: Optional[str]
     is_active: Optional[bool]
     updstmp: Optional[date]
-

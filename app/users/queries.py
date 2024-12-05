@@ -1,1 +1,0 @@
-GET_USERS = "SELECT id, email FROM users"
