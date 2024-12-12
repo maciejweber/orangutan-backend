@@ -11,6 +11,11 @@ class User(BaseModel):
     updstmp: date
 
 
+class UserResponse(BaseModel):
+    id: int
+    email: str
+
+
 class UserCreate(BaseModel):
     email: str
     passwd: str = Field(max_length=100, min_length=8)

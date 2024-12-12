@@ -12,7 +12,7 @@ async def get_user_details_from_db_by_id(id: int):
         "SELECT id, email, is_active, insstmp, updstmp FROM users WHERE id = $1", id
     )
     if user_details:
-        return user_details[0]
+        return dict(user_details[0])
     return None
 
 
@@ -22,19 +22,19 @@ async def get_user_details_from_db_by_email(email: str):
         email,
     )
     if user_details:
-        return user_details[0]
+        return dict(user_details[0])
     return None
 
 
 async def create_user_in_db(email: str, password: str):
     query = """
-        INSERT INTO users (email, password, is_active, insstmp, updstmp)
+        INSERT INTO users (email, passwd, is_active, insstmp, updstmp)
         VALUES ($1, $2, TRUE, NOW(), NOW())
-        RETURNING id, email, is_active, insstmp, updstmp
+        RETURNING id, email
     """
     created_user = await execute_db_query(
         query,
         email,
         password,
     )
-    return created_user[0]
+    return dict(created_user[0])
