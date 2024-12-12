@@ -28,7 +28,7 @@ async def get_user_details_from_db_by_email(email: str):
 
 async def create_user_in_db(email: str, password: str):
     query = """
-        INSERT INTO users (email, hashed_password, is_active, insstmp, updstmp)
+        INSERT INTO users (email, password, is_active, insstmp, updstmp)
         VALUES ($1, $2, TRUE, NOW(), NOW())
         RETURNING id, email, is_active, insstmp, updstmp
     """
