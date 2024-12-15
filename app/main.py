@@ -3,6 +3,8 @@ from fastapi import FastAPI, APIRouter
 from app.database import DataBasePool
 
 from app.users.router import router as users_router
+from app.exercises.router import router as exercises_router
+from app.trainings.router import router as trainings_router
 
 app = FastAPI()
 
@@ -20,6 +22,8 @@ async def shutdown():
 
 
 api_router.include_router(users_router, prefix="/users")
+api_router.include_router(exercises_router, prefix="/exercises")
+api_router.include_router(trainings_router, prefix="/trainings")
 
 
 app.include_router(api_router)
