@@ -1,10 +1,10 @@
 from fastapi import APIRouter, Depends
-from app.training.services import (
+from app.trainings.services import (
     get_training_for_user,
     create_new_training,
     add_new_training_exercise,
 )
-from app.training.models import CreateTrainingRequest, AddTrainingExerciseRequest
+from app.trainings.models import CreateTrainingRequest, AddTrainingExerciseRequest
 from app.dependencies.auth import get_current_user
 from app.users.models import User
 

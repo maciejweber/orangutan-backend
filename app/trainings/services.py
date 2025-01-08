@@ -1,10 +1,10 @@
 from fastapi import HTTPException
-from app.training.repositories import (
+from app.trainings.repositories import (
     get_user_trainings_from_db,
     create_training_in_db,
     add_training_exercise_in_db,
 )
-from app.training.models import (
+from app.trainings.models import (
     Training,
     TrainingResponse,
     AddTrainingExerciseRequest,
