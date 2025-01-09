@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import Optional
+from typing import Optional, List
 
 
 class Training(BaseModel):
@@ -31,3 +31,22 @@ class TrainingExerciseResponse(BaseModel):
     exerciseid: int
     # minsetnumber: Optional[int]
     # maxsetnumber: Optional[int]
+
+
+class Exercise(BaseModel):
+    id: int
+    partiesid: int
+    name: str
+    image: Optional[bytes] = None
+    hardrate: Optional[str] = None
+    description: Optional[str] = None
+    serieshint: Optional[int] = None
+    counthint: Optional[int] = None
+    breakhint: Optional[int] = None
+
+
+class TrainingWithExercises(BaseModel):
+    id: int
+    userid: int
+    name: str
+    exercises: List[Exercise]

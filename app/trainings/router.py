@@ -3,8 +3,13 @@ from app.trainings.services import (
     get_training_for_user,
     create_new_training,
     add_new_training_exercise,
+    get_training_with_exercises,
 )
-from app.trainings.models import CreateTrainingRequest, AddTrainingExerciseRequest
+from app.trainings.models import (
+    CreateTrainingRequest,
+    AddTrainingExerciseRequest,
+    TrainingWithExercises,
+)
 from app.dependencies.auth import get_current_user
 from app.users.models import User
 
@@ -38,3 +43,12 @@ async def add_training_exercise_endpoint(
         # request.maxsetnumber,
     )
     return exercise
+
+
+@router.get("/{training_id}", response_model=TrainingWithExercises)
+async def get_training_with_exercises_endpoint(
+    training_id: int,
+    current_user: User = Depends(get_current_user),
+):
+    training = await get_training_with_exercises(current_user.id, training_id)
+    return training

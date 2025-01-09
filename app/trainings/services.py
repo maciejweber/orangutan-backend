@@ -3,13 +3,16 @@ from app.trainings.repositories import (
     get_user_trainings_from_db,
     create_training_in_db,
     add_training_exercise_in_db,
+    get_training_exercises_from_db,
 )
 from app.trainings.models import (
     Training,
     TrainingResponse,
     AddTrainingExerciseRequest,
+    TrainingWithExercises,
     TrainingExerciseResponse,
 )
+from app.trainings.models import Exercise
 
 
 async def get_training_for_user(userid: int):
@@ -47,3 +50,26 @@ async def add_new_training_exercise(
         # , maxsetnumber
     )
     return TrainingExerciseResponse(**new_exercise)
+
+
+async def get_training_with_exercises(userid: int, trainingid: int):
+
+    trainings = await get_user_trainings_from_db(userid)
+    training = next((t for t in trainings if t["id"] == trainingid), None)
+    if not training:
+        raise HTTPException(
+            status_code=404,
+            detail="Training plan not found or does not belong to this user.",
+        )
+
+    exercises = await get_training_exercises_from_db(trainingid)
+    exercises_list = [Exercise(**ex) for ex in exercises]
+
+    training_with_exercises = TrainingWithExercises(
+        id=training["id"],
+        userid=training["userid"],
+        name=training["name"],
+        exercises=exercises_list,
+    )
+
+    return training_with_exercises

@@ -40,3 +40,14 @@ async def add_training_exercise_in_db(
     """
     result = await execute_db_query(query, userid, trainingid, exerciseid)
     return dict(result[0])
+
+
+async def get_training_exercises_from_db(trainingid: int):
+    query = """
+        SELECT e.id, e.partiesid, e.name, e.image, e.hardrate, e.description, e.serieshint, e.counthint, e.breakhint
+        FROM exercises e
+        JOIN training_exercises te ON e.id = te.exerciseid
+        WHERE te.trainingid = $1
+    """
+    results = await execute_db_query(query, trainingid)
+    return [dict(row) for row in results]
