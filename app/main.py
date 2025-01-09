@@ -6,6 +6,7 @@ from app.database import DataBasePool
 from app.users.router import router as users_router
 from app.exercises.router import router as exercises_router
 from app.trainings.router import router as trainings_router
+from app.series.router import router as series_router
 
 app = FastAPI()
 
@@ -31,7 +32,16 @@ __________________AAAA_______________AAAA______________________
                         ( /     \ )
                         ><       ><
                        ///\     /\\
-                       '''       '''        
+                       '''       '''      
+                       
+                                   _              
+                                  | |             
+  ___  _ __ __ _ _ __   __ _ _   _| |_ __ _ _ __  
+ / _ \| '__/ _` | '_ \ / _` | | | | __/ _` | '_ \ 
+| (_) | | | (_| | | | | (_| | |_| | || (_| | | | |
+ \___/|_|  \__,_|_| |_|\__, |\__,_|\__\__,_|_| |_|
+                        __/ |                     
+                       |___/                      
 """
 
 
@@ -63,6 +73,7 @@ async def root():
 api_router.include_router(users_router, prefix="/users")
 api_router.include_router(exercises_router, prefix="/exercises")
 api_router.include_router(trainings_router, prefix="/trainings")
+api_router.include_router(series_router, prefix="/series")
 
 app.include_router(api_router)
 

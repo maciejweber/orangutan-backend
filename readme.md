@@ -20,3 +20,7 @@ Dodawanie treningu
 Rozpoczęcie treningu
 -Pobranie całego treningu
 -Dodawanie nowej serii
+
+<!-- TODO -->
+
+w series weight powinno byc opcjonalne
