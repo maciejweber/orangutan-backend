@@ -10,6 +10,29 @@ app = FastAPI()
 
 api_router = APIRouter(prefix="/api/v1")
 
+ORANGUTAN_ASCII = """
+__________________AAAA_______________AAAA______________________
+                  VVVV               VVVV
+                  (__)               (__)
+                   \ \               / /
+                    \ \   \\|||//   / /
+                     > \   _   _   / <
+                      > \ / \ / \ / <
+                       > \\_o_o_// <
+                        > ( (_) ) <
+                         >|     |<
+                        / |\___/| \\
+                        / (_____) \\
+                        /         \\
+                         /   o   \\
+                          ) ___ (
+                         / /   \ \\
+                        ( /     \ )
+                        ><       ><
+                       ///\     /\\
+                       '''       '''        
+"""
+
 
 @app.on_event("startup")
 async def startup():
@@ -19,6 +42,11 @@ async def startup():
 @app.on_event("shutdown")
 async def shutdown():
     await DataBasePool.teardown()
+
+
+@app.get("/")
+async def root():
+    return {"message": ORANGUTAN_ASCII}
 
 
 api_router.include_router(users_router, prefix="/users")
