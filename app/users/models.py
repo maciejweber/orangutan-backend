@@ -1,14 +1,13 @@
 from pydantic import BaseModel, Field
-from typing import Optional
-from datetime import date
+from datetime import datetime
 
 
 class User(BaseModel):
     id: int
     email: str
     is_active: bool
-    insstmp: date
-    updstmp: date
+    insstmp: datetime
+    updstmp: datetime
 
 
 class UserResponse(BaseModel):

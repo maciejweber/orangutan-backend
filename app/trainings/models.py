@@ -20,8 +20,8 @@ class TrainingResponse(BaseModel):
 
 class AddTrainingExerciseRequest(BaseModel):
     exerciseid: int
-    minsetnumber: Optional[int] = None
-    maxsetnumber: Optional[int] = None
+    # minsetnumber: Optional[int] = None
+    # maxsetnumber: Optional[int] = None
 
 
 class TrainingExerciseResponse(BaseModel):
@@ -29,5 +29,5 @@ class TrainingExerciseResponse(BaseModel):
     userid: int
     trainingid: int
     exerciseid: int
-    minsetnumber: Optional[int]
-    maxsetnumber: Optional[int]
+    # minsetnumber: Optional[int]
+    # maxsetnumber: Optional[int]

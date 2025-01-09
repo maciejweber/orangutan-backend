@@ -28,12 +28,15 @@ async def add_training_exercise_in_db(
     minsetnumber: int = None,
     maxsetnumber: int = None,
 ):
+    # query = """
+    #     INSERT INTO training_exercises (userid, trainingid, exerciseid, minsetnumber, maxsetnumber)
+    #     VALUES ($1, $2, $3, $4, $5)
+    #     RETURNING id, userid, trainingid, exerciseid, minsetnumber, maxsetnumber
+    # """
     query = """
-        INSERT INTO training_exercises (userid, trainingid, exerciseid, minsetnumber, maxsetnumber)
-        VALUES ($1, $2, $3, $4, $5)
-        RETURNING id, userid, trainingid, exerciseid, minsetnumber, maxsetnumber
+        INSERT INTO training_exercises (userid, trainingid, exerciseid)
+        VALUES ($1, $2, $3)
+        RETURNING id, userid, trainingid, exerciseid
     """
-    result = await execute_db_query(
-        query, userid, trainingid, exerciseid, minsetnumber, maxsetnumber
-    )
+    result = await execute_db_query(query, userid, trainingid, exerciseid)
     return dict(result[0])

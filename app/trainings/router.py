@@ -11,12 +11,12 @@ from app.users.models import User
 router = APIRouter()
 
 
-@router.get("/training")
+@router.get("")
 async def get_user_trainings_endpoint(current_user: User = Depends(get_current_user)):
     return await get_training_for_user(current_user.id)
 
 
-@router.post("/training")
+@router.post("")
 async def create_training_endpoint(
     request: CreateTrainingRequest, current_user: User = Depends(get_current_user)
 ):
@@ -24,7 +24,7 @@ async def create_training_endpoint(
     return new_training
 
 
-@router.post("/training/{training_id}/exercises")
+@router.post("/{training_id}/exercises")
 async def add_training_exercise_endpoint(
     training_id: int,
     request: AddTrainingExerciseRequest,
@@ -34,7 +34,7 @@ async def add_training_exercise_endpoint(
         current_user.id,
         training_id,
         request.exerciseid,
-        request.minsetnumber,
-        request.maxsetnumber,
+        # request.minsetnumber,
+        # request.maxsetnumber,
     )
     return exercise

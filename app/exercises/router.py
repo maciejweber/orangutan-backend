@@ -5,6 +5,6 @@ router = APIRouter()
 
 
 # TODO get exercies by paries
-@router.get("/exercises")
+@router.get("")
 async def get_exercises_endpoint():
     return await get_exercises()
