@@ -7,17 +7,6 @@ from app.dependencies.auth import get_current_user
 router = APIRouter()
 
 
-@router.get("/")
-async def get_users_endpoint():
-    users = await get_users()
-    return users
-
-
-# @router.get("/secure-endpoint", response_model=User)
-# async def secure_endpoint(current_user: User = Depends(get_current_user)):
-#     return current_user
-
-
 # @router.get("/{id}")
 # async def get_users_endpoint(id: int):
 #     users = await get_user_details(id)

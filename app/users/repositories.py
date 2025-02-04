@@ -18,7 +18,7 @@ async def get_user_details_from_db_by_id(id: int):
 
 async def get_user_details_from_db_by_email(email: str):
     user_details = await execute_db_query(
-        "SELECT id, email, is_active, insstmp, updstmp FROM users WHERE email = $1",
+        "SELECT id, email, is_active, insstmp, updstmp, passwd FROM users WHERE email = $1",
         email,
     )
     if user_details:

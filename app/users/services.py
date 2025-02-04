@@ -29,8 +29,8 @@ async def login_user(email: str, password: str):
     if not user:
         raise HTTPException(status_code=404, detail="Invalid email or password")
 
-    # if not bcrypt.checkpw(password.encode(), user["hashed_password"].encode()):
-    #     raise HTTPException(status_code=401, detail="Invalid email or password")
+    if not bcrypt.checkpw(password.encode(), user["passwd"].encode()):
+        raise HTTPException(status_code=401, detail="Invalid email or password")
 
     access_token = create_jwt_token({"sub": user["email"], "user_id": user["id"]})
 
@@ -46,6 +46,6 @@ async def register_user(email: str, password: str):
 
     hashed_password = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
 
-    created_user = await create_user_in_db(email, password)
+    created_user = await create_user_in_db(email, hashed_password)
 
     return UserResponse(**created_user)
