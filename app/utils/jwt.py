@@ -11,7 +11,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 ALGORITHM = "HS256"
 
 
-def create_jwt_token(data: dict, expires_delta: timedelta = timedelta(hours=1)) -> str:
+def create_jwt_token(data: dict, expires_delta: timedelta = timedelta(days=1)) -> str:
     data.update({"exp": datetime.utcnow() + expires_delta})
     return jwt.encode(data, SECRET_KEY, algorithm=ALGORITHM)
 

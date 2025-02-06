@@ -4,6 +4,8 @@ from app.trainings.services import (
     create_new_training,
     add_new_training_exercise,
     get_training_with_exercises,
+    delete_training_exercise,
+    delete_training,
 )
 from app.trainings.models import (
     CreateTrainingRequest,
@@ -45,6 +47,17 @@ async def add_training_exercise_endpoint(
     return exercise
 
 
+@router.delete("/{training_id}/exercises/{exercise_id}")
+async def delete_training_exercise_endpoint(
+    training_id: int,
+    exercise_id: int,
+    current_user: User = Depends(get_current_user),
+):
+    # Funkcja usuwająca ćwiczenie z treningu
+    deleted = await delete_training_exercise(current_user.id, training_id, exercise_id)
+    return {"detail": "Exercise removed from training", "deleted": deleted}
+
+
 @router.get("/{training_id}", response_model=TrainingWithExercises)
 async def get_training_with_exercises_endpoint(
     training_id: int,
@@ -52,3 +65,12 @@ async def get_training_with_exercises_endpoint(
 ):
     training = await get_training_with_exercises(current_user.id, training_id)
     return training
+
+
+@router.delete("/{training_id}")
+async def delete_training_endpoint(
+    training_id: int,
+    current_user: User = Depends(get_current_user),
+):
+    deleted = await delete_training(current_user.id, training_id)
+    return {"detail": "Training deleted", "deleted": deleted}

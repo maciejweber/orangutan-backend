@@ -6,6 +6,7 @@ class Training(BaseModel):
     id: int
     userid: int
     name: str
+    exercisesNumber: int = 0
 
 
 class CreateTrainingRequest(BaseModel):
