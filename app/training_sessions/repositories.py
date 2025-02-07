@@ -1,10 +1,9 @@
 from datetime import datetime
 from app.database import execute_db_query
-from typing import List
+from typing import List, Optional
 
 
 async def create_training_session_in_db(userid: int, trainingid: int) -> dict:
-
     query = """
         INSERT INTO training_sessions (userid, trainingid, start_time)
         VALUES ($1, $2, NOW())
@@ -71,3 +70,20 @@ async def get_completed_sessions_for_user(userid: int) -> List[dict]:
     """
     results = await execute_db_query(query, userid)
     return [dict(r) for r in results]
+
+
+async def get_last_session(
+    userid: int, trainingid: int, exclude_session_id: int
+) -> Optional[dict]:
+    query = """
+        SELECT id, userid, trainingid, start_time, end_time
+          FROM training_sessions
+         WHERE userid = $1
+           AND trainingid = $2
+           AND end_time IS NOT NULL
+           AND id <> $3
+         ORDER BY end_time DESC
+         LIMIT 1
+    """
+    results = await execute_db_query(query, userid, trainingid, exclude_session_id)
+    return dict(results[0]) if results else None

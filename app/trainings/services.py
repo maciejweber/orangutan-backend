@@ -97,7 +97,7 @@ async def get_training_with_exercises(userid: int, trainingid: int):
 
 
 async def delete_training(userid: int, trainingid: int):
-    # 1. Sprawdź, czy trening należy do użytkownika
+
     trainings = await get_user_trainings_from_db(userid)
     if not any(t["id"] == trainingid for t in trainings):
         raise HTTPException(
@@ -105,11 +105,8 @@ async def delete_training(userid: int, trainingid: int):
             detail="Training plan not found or does not belong to this user.",
         )
 
-    # 2. (Opcjonalnie) Usuń ćwiczenia powiązane z trainingid,
-    #    jeśli nie mamy w bazie CASCADE:
     await delete_all_exercises_for_training_from_db(trainingid)
 
-    # 3. Usuń sam trening:
     deleted_training = await delete_training_from_db(userid, trainingid)
     if not deleted_training:
         raise HTTPException(
