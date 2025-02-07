@@ -7,6 +7,7 @@ from app.users.router import router as users_router
 from app.exercises.router import router as exercises_router
 from app.trainings.router import router as trainings_router
 from app.series.router import router as series_router
+from app.training_sessions.router import router as training_sessions_router
 
 app = FastAPI()
 
@@ -74,6 +75,7 @@ api_router.include_router(users_router, prefix="/users")
 api_router.include_router(exercises_router, prefix="/exercises")
 api_router.include_router(trainings_router, prefix="/trainings")
 api_router.include_router(series_router, prefix="/series")
+api_router.include_router(training_sessions_router, prefix="/training_sessions")
 
 app.include_router(api_router)
 

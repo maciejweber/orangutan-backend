@@ -6,7 +6,7 @@ class Exercise(BaseModel):
     id: int
     partiesid: int
     name: str
-    image: Optional[bytes] = (
+    image: Optional[str] = (
         "https://www.fabrykasily.pl/upload/gallery/2018/07/id_18973_1532436684_1260x841.jpg"
     )
     hardrate: Optional[str]

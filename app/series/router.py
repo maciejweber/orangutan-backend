@@ -19,5 +19,6 @@ async def add_series_endpoint(
         setnumber=request.setnumber,
         countnumber=request.countnumber,
         weight=request.weight,
+        trainingsessionid=request.trainingsessionid,
     )
     return series

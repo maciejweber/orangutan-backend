@@ -11,9 +11,11 @@ class Series(BaseModel):
     countnumber: int
     weight: float
     insstmp: datetime
+    trainingsessionid: int
 
 
 class CreateSeriesRequest(BaseModel):
+    trainingsessionid: int
     trainingid: int
     exerciseid: int
     setnumber: int

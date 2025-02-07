@@ -14,6 +14,7 @@ async def create_new_series(
     setnumber: int,
     countnumber: int,
     weight: float,
+    trainingsessionid: int,
 ):
     training = await get_training_by_id(userid, trainingid)
     if not training:
@@ -30,6 +31,12 @@ async def create_new_series(
         )
 
     new_series = await add_series_in_db(
-        userid, trainingid, exerciseid, setnumber, countnumber, weight
+        userid,
+        trainingid,
+        exerciseid,
+        setnumber,
+        countnumber,
+        weight,
+        trainingsessionid,
     )
     return Series(**new_series)

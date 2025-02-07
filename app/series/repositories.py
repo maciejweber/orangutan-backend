@@ -8,14 +8,22 @@ async def add_series_in_db(
     setnumber: int,
     countnumber: int,
     weight: float,
+    trainingsessionid: int,
 ):
     query = """
-        INSERT INTO series (userid, trainingid, exerciseid, setnumber, countnumber, weight)
-        VALUES ($1, $2, $3, $4, $5, $6)
-        RETURNING id, userid, trainingid, exerciseid, setnumber, countnumber, weight, insstmp
+        INSERT INTO series (userid, trainingid, exerciseid, setnumber, countnumber, weight, trainingsessionid)
+        VALUES ($1, $2, $3, $4, $5, $6, $7)
+        RETURNING id, userid, trainingid, exerciseid, setnumber, countnumber, weight, insstmp, trainingsessionid
     """
     result = await execute_db_query(
-        query, userid, trainingid, exerciseid, setnumber, countnumber, weight
+        query,
+        userid,
+        trainingid,
+        exerciseid,
+        setnumber,
+        countnumber,
+        weight,
+        trainingsessionid,
     )
     return dict(result[0])
 
