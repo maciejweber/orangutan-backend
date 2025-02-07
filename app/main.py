@@ -1,6 +1,7 @@
 import uvicorn
 from fastapi import FastAPI, APIRouter
 from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
 from app.database import DataBasePool
 
 from app.users.router import router as users_router
@@ -70,6 +71,8 @@ async def root():
     """
     return html_content
 
+
+app.mount("/images", StaticFiles(directory="app/static/images"), name="images")
 
 api_router.include_router(users_router, prefix="/users")
 api_router.include_router(exercises_router, prefix="/exercises")
